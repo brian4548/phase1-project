@@ -1,3 +1,6 @@
+
+
+
 Game.destroy_all
 User.destroy_all
 Review.destroy_all
@@ -40,22 +43,22 @@ game35= Game.create(name: "Testing is Free", cost: 80,  genre: "Horror")
 
 
 
-user1 = User.create(name: "Bob", username: "abc123", password: "123456789", age: 24)
-user2 = User.create(name: "Alex",username: "abc123", password: "123456789", age: 25)
-user3 = User.create(name: "Carl",username: "abc123", password: "123456789", age: 30)
-user4 = User.create(name: "Brian",username: "abc123", password: "123456789",age: 28)
-user5 = User.create(name: "Rhodes",username: "abc123", password: "123456789",age: 15)
-user6 = User.create(name: "Jesus",username: "abc123", password: "123456789", age: 33)
-user7 = User.create(name: "Garcia",username: "abc123", password: "123456789",age: 24)
-user8 = User.create(name: "Angelo",username: "abc123", password: "123456789",age: 19)
-user9 = User.create(name: "Raul",username: "abc123", password: "123456789",age: 18)
+user1 = User.create(name: "Bob", username: "abc", password: "12345", age: 24)
+user2 = User.create(name: "Alex",username: "qwe", password: "12345", age: 25)
+user3 = User.create(name: "Carl",username: "asd", password: "12345", age: 30)
+user4 = User.create(name: "Brian",username: "zxc", password: "12345",age: 28)
+user5 = User.create(name: "Rhodes",username: "123", password: "12345",age: 15)
+user6 = User.create(name: "Jesus",username: "098", password: "12345", age: 33)
+user7 = User.create(name: "Garcia",username: "456", password: "12345",age: 24)
+user8 = User.create(name: "Angelo",username: "789", password: "12345",age: 19)
+user9 = User.create(name: "Raul",username: "abc123", password: "12345",age: 18)
 
 review1 = Review.create(game_id: game1.id,user_id: user1.id,rating: 5,comment: "it was eh")
 review2 = Review.create(game_id: game2.id,user_id: user2.id,rating: 8,comment: "DOPE!!!!")
 review3 = Review.create(game_id: game3.id,user_id: user3.id,rating: 6,comment: "needs some work!")
 review4 = Review.create(game_id: game4.id,user_id: user4.id,rating: 7,comment: "Pretty fun!")
 review5 = Review.create(game_id: game5.id,user_id: user5.id,rating: 9,comment: "AMAZING!!")
-review6 = Review.create(game_id: game6.id,user_id: user6.id,rating: 10,comment: "cool!!!!")
+review6 = Review.create(game_id: game6.id,user_id: user6.id,rating: 8,comment: "cool!!!!")
 review7 = Review.create(game_id: game7.id,user_id: user7.id,rating: 7,comment: "good")
 review8 = Review.create(game_id: game8.id,user_id: user8.id,rating: 7,comment:"kind of okay")
 review9 = Review.create(game_id: game9.id,user_id: user9.id,rating: 4,comment: "don't recomment it")
@@ -87,36 +90,35 @@ review31= Review.create(game_id: game31.id,user_id: user1.id,rating: 8,comment: 
 review32= Review.create(game_id: game32.id,user_id: user2.id,rating: 8,comment: "cool")
 review33= Review.create(game_id: game33.id,user_id: user3.id,rating: 8,comment: "cool")
 review34= Review.create(game_id: game34.id,user_id: user4.id,rating: 8,comment: "cool")
-review35= Review.create(game_id: game35.id,user_id: user5.id,rating: 8,comment: "cool")
+review35= Review.create(game_id: game35.id,user_id: user5.id,rating: 9.5,comment: "cool")
 review36= Review.create(game_id: game1.id,user_id: user6.id,rating: 9,comment: "good")
 review37= Review.create(game_id: game3.id,user_id: user7.id,rating: 7,comment:"great")
 review38= Review.create(game_id: game2.id,user_id: user8.id,rating: 8,comment: "cool")
 
-review39= Review.create(game_id: game10.id,user_id: user1.id,rating: 8,comment: "cool")
-review40= Review.create(game_id: game12.id,user_id: user2.id,rating: 8,comment: "cool")
-review41= Review.create(game_id: game13.id,user_id: user3.id,rating: 8,comment: "cool")
-review42= Review.create(game_id: game15.id,user_id: user4.id,rating: 8,comment: "cool")
-review43= Review.create(game_id: game19.id,user_id: user5.id,rating: 8,comment: "cool")
-review44= Review.create(game_id: game20.id,user_id: user6.id,rating: 8,comment: "cool")
-review45= Review.create(game_id: game23.id,user_id: user7.id,rating: 9,comment: "good")
+review39= Review.create(game_id: game10.id,user_id: user1.id,rating: 8,comment: "only gave ive downloaded all dlc's for")
+review40= Review.create(game_id: game12.id,user_id: user2.id,rating: 6,comment: "could be better......not")
+review41= Review.create(game_id: game13.id,user_id: user3.id,rating: 4,comment: "bleh")
+review42= Review.create(game_id: game15.id,user_id: user4.id,rating: 7,comment: "too many missions")
+review43= Review.create(game_id: game19.id,user_id: user5.id,rating: 5,comment: "on my way to return it")
+review44= Review.create(game_id: game20.id,user_id: user6.id,rating: 9,comment: "had to buy the deluxe version")
+review45= Review.create(game_id: game23.id,user_id: user7.id,rating: 7,comment: "too many characters")
 
 review46= Review.create(game_id: game25.id,user_id: user1.id,rating: 7,comment:"great")
-review47= Review.create(game_id: game35.id,user_id: user3.id,rating: 8,comment: "Very fun, need to try this!!!!")
-review48= Review.create(game_id: game35.id,user_id: user4.id,rating: 9,comment: "Impressed!!")
-review49= Review.create(game_id: game35.id,user_id: user6.id,rating: 7,comment:"pretty good, expected it to be free tho!")
-review50= Review.create(game_id: game35.id,user_id: user9.id,rating: 8,comment: "This testing definetely no free! BUT ITS SO AMAZING!!! MUST CHECK IT OUT!!!!")
+review47= Review.create(game_id: game35.id,user_id: user3.id,rating: 9.8,comment: "Very fun, need to try this!!!!")
+review48= Review.create(game_id: game35.id,user_id: user4.id,rating: 9.6,comment: "Impressed!!")
+review49= Review.create(game_id: game35.id,user_id: user6.id,rating: 9,comment:"pretty good, expected it to be free tho!")
+review50= Review.create(game_id: game35.id,user_id: user9.id,rating: 10,comment: "This testing definetely no free! BUT ITS SO AMAZING!!! MUST CHECK IT OUT!!!!")
 
-review51= Review.create(game_id: game33.id,user_id: user1.id,rating: 7,comment:"great")
-review52= Review.create(game_id: game32.id,user_id: user2.id,rating: 9,comment: "good")
+review51= Review.create(game_id: game33.id,user_id: user1.id,rating: 7,comment:"give it another try")
+review52= Review.create(game_id: game32.id,user_id: user2.id,rating: 9,comment: "been playing every day")
 review53= Review.create(game_id: game31.id,user_id: user3.id,rating: 7,comment:"great")
 review54= Review.create(game_id: game30.id,user_id: user4.id,rating: 9,comment: "good")
-review55= Review.create(game_id: game29.id,user_id: user5.id,rating: 7,comment:"great")
-review56= Review.create(game_id: game26.id,user_id: user6.id,rating: 9,comment: "good")
-review57= Review.create(game_id: game24.id,user_id: user7.id,rating: 7,comment:"great")
-review58= Review.create(game_id: game23.id,user_id: user8.id,rating: 9,comment: "good")
-review59= Review.create(game_id: game20.id,user_id: user9.id,rating: 7,comment:"great")
+review55= Review.create(game_id: game29.id,user_id: user5.id,rating: 7,comment:"sucks")
+review56= Review.create(game_id: game26.id,user_id: user6.id,rating: 9,comment: "wish i made it myself")
+review57= Review.create(game_id: game24.id,user_id: user7.id,rating: 7,comment:"i want some tacos")
+review58= Review.create(game_id: game23.id,user_id: user8.id,rating: 9,comment: "tacos and gaming, best combo!")
+review59= Review.create(game_id: game20.id,user_id: user9.id,rating: 5,comment:"id rather go for a walk")
 review60= Review.create(game_id: game15.id,user_id: user9.id,rating: 8,comment: "cool")
-
 
 
 

@@ -1,52 +1,65 @@
 require_relative '../config/environment'
-require 'tty-prompt'
+require 'colorize'
 
 class AppCLI
 
     def run
-        welcome
-        # main_page
+        system('clear')
+        welcome_page
     end
 
-    def welcome
-        puts "Welcome to GameCore"
+    def welcome_page
+        puts " ʕ•́ᴥ•̀ʔっ♡   Welcome to GameCore   ʕ•́ᴥ•̀ʔっ♡ ".blue
         puts "One and only reliable source for gamers."
-        # puts "Sign In"
-        # puts "Create Account"
+        choices = {Sign_In: 1, Create_Account: 2, About: 3, Exit: 4}
         prompt = TTY::Prompt.new
-        choices = {Sign_In: 1, Create_account: 2, Find_genres: 3, About: 4, exit: 5}
-        variable = prompt.select("What would you like to do?", choices)
-        if variable == 1
-            self.sign_in
-        elsif variable == 2
-            self.create_new_user_page
-        elsif variable == 3
-            self.find_by_genres_page
-        elsif variable == 4
-            self.about_page
-        elsif variable == 5
-            self.exit_page
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            sign_in_page
+        elsif val == 2
+            system('clear')
+            create_new_user
+        elsif val == 3
+            system('clear')
+            about_page
+        else
+            system('Exit')
         end
-           
     end
 
-    def sign_in
+    def sign_in_page
         puts "Enter your Username:"
         prompt = TTY::Prompt.new
         name_input = gets.chomp
         puts "Enter your Password:"
         password = prompt.mask(password)
-        @current_user = User.find_by_name(name_input)
-        if ((name_input == @current_user.username) && (password == @current_user.password)) == true
-            system('clear')
-            main_page
-        elsif
+        # @current_user = ""
+        @current_user = User.find{|user| user.username == name_input}
+        
+                # binding.pry
+        if @current_user == nil
+            puts "incorrect username and password"
+            sleep 1
             system('clear')
             sign_in_page
+        elsif ((name_input == @current_user.username) && (password == @current_user.password)) == true
+            # if ((name_input == @current_user.username) && (password == @current_user.password)) == true
+            puts "Currently logging you in......"
+            sleep 2
+            system('clear')
+            main_page
+        else
+            puts "incorrect username and password"
+            sleep 2
+            system('clear')
+            sign_in_page
+            
         end
+        
     end
 
-    def create_new_user_page
+    def create_new_user
         # t.string "name"
         # t.string "username"
         # t.string "password"
@@ -64,64 +77,296 @@ class AppCLI
         @current_user = User.create(name: name, age: age, username: username, password: password)
         system('clear')
         puts"Account Created..... Directing you back to main page....."
-        sleep 3
+        sleep 2
         system('clear')
-        welcome
-
-    end
-
-    def about_page
-        puts "WELCOME TO GAMECORE!!!!"
-        puts "Here we have the most honest and accurate reviews for video games."
-        puts "We literally have every single title ever created in the world!"
-        puts "Gamecore started in 2012 as a simple email news letter that provided updates for new game releases."
-        puts "Since then it has evolved into the most popular website and application for all game related news, primarily reviews"
-        sleep 10
         main_page
     end
 
-    def main_page
-        puts "Games, Reviews, Ratings, Comments"
-        puts "Welcome to GameLair"
-    puts "Games!                      .:'                                  `:.        "                            
-    puts "Best Reviews!              ::'                                    `::     "                              
-    puts "Use our app               :: :.                                  .: ::   "                               
-    puts "to find the               :   `.                                .'   :          "
-    puts "best games!!!             `:.  `:.             .              .:'  .:'      "                                   
-    puts "                            `::. `::           !           ::' .::'        "                                     
-    puts "                                `::.`::.    .' ! `.    .::'.::'         "                                         
-    puts "                                  `:.  `::::'':!:``::::'   ::'        "                                          
-    puts "Since 2020!                       :'*:::.  .:' ! `:.  .:::*`:      "                                     
-    puts "FlatIron Proud!                  :: HHH::.   ` ! '   .::HHH ::    "                                      
-    puts "                                ::: `H TH::.  `!'  .::HT H' :::  "                                       
-    puts "                                ::..  `THHH:`:   :':HHHT'  ..::     "                                        
-    puts "                                `::      `T: `. .' :T'      ::'      "                                         
-    puts "                                  `:. .   :         :   . .:' "                                          
-    puts "                                    `::'               `::'  "                                           
-    puts "                                      :'  .`.  .  .'.  `:   "                                           
-    puts "                                      :' ::.       .:: `:  "                                             
-    puts "                                      :' `:::     :::' `: "                                              
-    puts "                                       `.  ``     ''  .'    "                                               
-    puts "                                        :`...........':    "                                                
-    puts "                                        ` :`.V   V.': '   "                                                 
-    puts "                                         `:  `---'  :'     "
-    puts "Welcome to GameCore"
-    puts "One and only reliable source for gamers."
-        # puts "Sign In"
-        # puts "Create Account"
+    def about_page
+        puts "   ᕙ(^▿^-ᕙ)   WELCOME TO GAMECORE!!!!   (>-^▿^)>   \n\n".blue
+        puts "Here we have the most honest and accurate reviews for video games."
+        puts "We literally have every single title ever created in the world!"
+        puts "So come check us out! Create an account right now!"
+        puts "If you have an account already, sign in real quick! We have new games and reviews posted daily!!!"
+        puts "Come and see what the next game should be in your mind!\n\n"
+        puts " [+..••]  [+..••]  [+..••]  [+..••]  [+..••]  [+..••]  ".blue
+        choices = {Sign_In: 1, Create_Account: 2, Welcome_Page: 3}
         prompt = TTY::Prompt.new
-        choices = {About: 1, Find_Genres: 2, exit: 3}
-        variable = prompt.select("What would you like to do?", choices)
-        if variable == 1
-            self.about_page
-        elsif variable == 2
-            self.find_by_genres_page
-        else variable == 3
-            system('Exit')
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            sign_in_page
+        elsif val == 2
+            system('clear')
+            create_new_user
+        else
+            system('clear')
+            welcome_page
         end
     end
 
-    def find_by_genres_page
+    def main_page
+
+    puts "Welcome to GameCore"
+    puts "Games!"+"                      .:'                                  `:.        ".blue                            
+    puts "Best Reviews!"+"              ::'                                    `::     ".blue                              
+    puts "Use our app"+"               :: :.                                  .: ::   ".blue                              
+    puts "to find the"+"               :   `.                                .'   :          ".blue
+    puts "best games!!!"+"             `:.  `:.             .              .:'  .:'      ".blue                                   
+    puts "                            `::. `::           !           ::' .::'        ".blue                                     
+    puts "                                `::.`::.    .' ! `.    .::'.::'         ".blue                                         
+    puts "                                  `:.  `::::'':!:``::::'   ::'        ".blue                                          
+    puts "Since 2020!"+"                       :'*:::.  .:' ! `:.  .:::*`:      ".blue                                     
+    puts "FlatIron Proud!"+"                  :: HHH::.   ` ! '   .::HHH ::    ".blue                                      
+    puts "                                ::: `H TH::.  `!'  .::HT H' :::  ".blue                                       
+    puts "                                ::..  `THHH:`:   :':HHHT'  ..::     ".blue                                        
+    puts "                                `::      `T: `. .' :T'      ::'      ".blue                                         
+    puts "                                  `:. .   :         :   . .:' ".blue                                          
+    puts "                                    `::'               `::'  ".blue                                           
+    puts "                                      :'  .`.  .  .'.  `:   ".blue                                           
+    puts "                                      :' ::.       .:: `:  ".blue                                             
+    puts "                                      :' `:::     :::' `: ".blue                                              
+    puts "                                       `.  ``     ''  .'    ".blue                                               
+    puts "                                        :`...........':    ".blue                                                
+    puts "                                        ` :`.V   V.': '   ".blue                                                 
+    puts "                                         `:  `---'  :'     ".blue
+        choices = {Profile: 1, All_Games: 2, Find_By_Genre: 3,Featured_Game: 4, Top_3_Genres: 5, Top_5_Games: 6, Recent_Ratings: 7, Logout: 8}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            profile_page
+        elsif val == 2
+            system('clear')
+            all_games_page
+        elsif val == 3
+            system('clear')
+            find_by_genre_page
+        elsif val == 4
+            system('clear')
+            featured_game_page
+        elsif val == 5
+            system('clear')
+            top_three_rated_genres_page
+        elsif val == 6
+            system('clear')
+            top_five_games_page
+        elsif val == 7
+            system('clear')
+            ten_most_recent_reviews
+        else
+            system('clear')
+            logout_page
+        end
+        
+    end
+
+    def logout_page
+        puts "Currently logging you out.....".blue
+         sleep 5
+        puts "Give me 10 more minutes...........".blue
+         sleep 10
+        system('clear')
+        welcome_page
+    end
+
+    def profile_page
+        system('clear')
+        puts "[+..••]  [+..••]  [+..••]  Profile Page  [+..••]  [+..••]  [+..••]".blue
+        puts "\n  Name:   #{@current_user.name}"
+        puts "     Age:   #{@current_user.age}"
+        puts "Username:   #{@current_user.username}"
+
+        puts "\n\n[+..••]  [+..••]  [+..••]  Owned games:  [+..••]  [+..••]  [+..••]\n".blue
+
+        @current_user.currently_owned_games.each do |array|
+                puts "   Game: "  +"  #{array[0]}".blue
+                puts "  Genre: "  +"  #{array[1]}".blue
+                puts " Rating: "  +"  #{array[2]}".blue
+                puts "Comment: "  +"  #{array[3]}".blue
+                puts "\n\n"
+        end
+
+        choices = {Update_Profile_Info: 1, Create_Review: 2, Delete_Review: 3, Go_Back_To_Main_Page: 4, Logout: 5}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            update_user_settings_page
+        elsif val == 2
+            system('clear')
+            user_create_review_page
+        elsif val == 3
+            system('clear')
+            delete_review_page
+        elsif val == 4
+            system('clear')
+            main_page
+        else
+            system('clear')
+            logout_page
+        end
+    end
+
+    def user_create_review_page
+        system('clear')
+        choices = {Yes: 1, No: 2, }
+        prompt1 = TTY::Prompt.new
+        var = prompt1.select("Would you like to create a review?", choices)
+        if var == 1 
+            puts "Type the game you would like to review:"
+            game_name = gets.chomp
+            game = Game.find_by_name(game_name)
+            puts "Type the rating you give it:"
+            rating = gets.chomp
+            puts "Any comments?"
+            comment = gets.chomp
+
+            new_review = Review.create(user_id: @current_user.id, game_id: game.id, rating: rating, comment: comment)    
+            #t.integer :game_id
+            #t.integer :user_id
+            #t.float :rating
+            #t.string :comment
+        end
+        
+        choices = {Profile_Page: 1,Update_Profile_Info: 2, Go_Back_To_Main_Page: 3, Logout: 4}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            profile_page
+        elsif val == 2
+            system('clear')
+            update_user_settings_page
+        elsif val == 3
+            system('clear')
+            main_page
+        else
+            system('clear')
+            logout_page
+        end
+    end
+
+    def update_user_settings_page
+        puts "User Settings"
+        puts "Would you like to change anything?"
+        choices = {Name: 1, Age: 2, Username: 3, Password: 4, Back_To_Profile:5}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            name = gets.chomp
+            @current_user.name = name
+            puts "Updates being applied..."
+            sleep 2
+            puts "Update successful!"
+            system('clear')
+            profile_page
+
+        elsif val == 2
+            age = gets.chomp
+            @current_user.age = age
+            puts "Updates being applied..."
+            sleep 2
+            puts "Update successful!"
+            system('clear')
+            profile_page
+
+        elsif val == 3
+            username = gets.chomp
+            @current_user.username = username
+            puts "Updates being applied..."
+            sleep 2
+            puts "Update successful!"
+            system('clear')
+            profile_page
+
+        elsif val == 4
+            password = gets.chomp
+            puts"\nMake sure to write it down!"
+            @current_user.password = password
+            puts "Updates being applied..."
+            sleep 2
+            puts "Update successful!"
+            system('clear')
+            profile_page
+
+        else   
+            profile_page
+        end
+
+    end
+
+    def all_games_page
+        @current_game = nil
+        Game.all.each do |game|
+            puts game.name
+        end
+        choices = {Find_By_Genre: 1, Find_Game: 2, Go_Back_To_Main_Page: 3}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            find_by_genre_page
+        elsif val == 2
+            puts "What game would you like to search?"
+            @current_game = gets.chomp
+            system('clear')
+            find_game_by_name_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
+    def find_game_by_name_page
+        puts "#{@current_game}\n".blue
+        h = Review.game_rating_comment_hash
+        h.each_key do |key|
+            if key == @current_game
+                puts "Rating:  ".blue
+                p h[key][:ratings]
+                puts "Comments: ".blue
+                h[key][:comments].each do |v|
+                    p v
+                end
+            end
+        end
+        puts ""
+        
+        choices = {Find_By_Genre: 1, Go_To_Profile: 2, Go_Back_To_Main_Page: 3}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            find_by_genre_page
+        elsif val == 2
+            system('clear')
+            profile_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
+    def delete_review_page
+        puts "\n What game for a review would you like to delete?\n"
+            game_name = gets.chomp
+            @current_user.delete_user_review(game_name)
+        
+        sleep 1
+        choices = {Go_To_Profile: 1, Go_Back_To_Main_Page: 2}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            profile_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
+    def find_by_genre_page
         @current_genre = nil
         prompt = TTY::Prompt.new
         count = 0
@@ -136,81 +381,174 @@ class AppCLI
                     @current_genre = "Action"
         elsif var1 == 1
                     @current_genre = "Adventure"
-        elsif var1 ==2
+        elsif var1 == 2
                     @current_genre = "Fantasy"
         elsif var1 == 3
                     @current_genre = "Horror"
-        elsif var1 ==4
+        elsif var1 == 4
                     @current_genre = "Platform"
-        elsif var1 ==5
+        elsif var1 == 5
                     @current_genre = "Racing"
         else
             system('clear')
             main_page
         end
         system('clear')
-            games_under_genre_page
+            games_under_genre
     end
 
-    def exit_page
-        system('Exit')
-    end
-
-    
-##### GENRES -> GAME ###################################################
-#########################################################################
-    # def adventure
-    #     prompt = TTY::Prompt.new
-    #     choices = []
-    #     choices << {name: "god_of_war", value: 1}
-    #     var = prompt.select("What Game?", choices)
-    #     if var == 1
-    #         self.god_of_war
-    #     end  
-    # end
-    
-
-
-    def games_under_genre_page
-        Game.games_in_genre(@current_genre).each do |game|
-            p game.name
+    def featured_game_page
+        system('clear')
+        puts "\nBest Game So Far!!! Make sure to buy and try it out!!!!!\n"
+        puts ""
+        count = 0
+        mkey = nil
+        h = Review.game_rating_comment_hash
+        h.each_key do |key|
+            if h[key][:ratings] > count
+                count = h[key][:ratings]
+                mkey = key
+            end
         end
-        choices = {Find_By_Genre: 1, Main_Page: 2}
+        puts "Feature Game: "+ " #{mkey}".blue
+        puts "Rating:  "+"      #{h[mkey][:ratings]}".blue
+        puts "Comments:"
+        h[mkey][:comments].each do |v|
+            puts v.blue
+        end
+        puts ""
+        choices = {Go_To_Profile: 1, Go_Back_To_Main_Page: 2}
         prompt = TTY::Prompt.new
         val = prompt.select("What would you like to do right now?", choices)
         if val == 1
             system('clear')
-            find_by_genres_page
+            profile_page
         else
             system('clear')
             main_page
         end
     end
 
-#### GAMES -> to reviews #### 
-    ######################################################################################
-    def god_of_war
+    def top_three_rated_genres_page
+        system('clear')
+        puts "\n Here are the top 3 Genres! \n\n".blue
+
+        x = -1
+        z = Game.average_rating_of_genre
+        
+
+        3.times do
+            puts "Genre: "+" #{z[x][1]}".blue
+            puts "Rating:"+" #{z[x][0]}".blue
+            puts "\n\n"
+            x -= 1
+            
+        end
+        choices = {Top_5_Games: 1, Recent_Reviews: 2, Go_To_Profile: 3, Go_Back_To_Main_Page: 4}
         prompt = TTY::Prompt.new
-        choices = []
-        choices << {see_reviews: "see_review", value: 1}
-        choices << {create_reviews: "create_review", value: 2}
-        var = prompt.select("what would you like to do?", choices)
-            if var ==  1
-                Review.all_reviews.each do |review|
-                    if review.game_id == game1.game_id
-                        puts " god of war has rating of #{review.rating}. here are some of the comments"
-                    end
-                end
-            elsif var == 2
-                User.new_review
-            end
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            top_five_games_page
+        elsif val == 2
+            system('clear')
+            ten_most_recent_reviews
+        elsif val == 3
+            system('clear')
+            profile_page
+        else
+            system('clear')
+            main_page
+        end
     end
-    
+
+    def ten_most_recent_reviews
+        system('clear')
+        count = -1
+        puts "\nHere are the most recent reviews!\n"
+        10.times do
+            puts Review.all[count].game.name.blue
+            puts Review.all[count].rating
+            puts Review.all[count].comment
+            puts ""
+            count -= 1
+        end
+
+        
+
+        choices = {Top_3_Genres: 1, Top_5_Games: 2, Go_To_Profile: 3, Go_Back_To_Main_Page: 4}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            top_three_rated_genres_page
+        elsif val == 2
+            system('clear')
+            top_five_games_page
+        elsif val == 3
+            system('clear')
+            profile_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
+    def top_five_games_page
+        system('clear')
+        puts "\n Here are our 5 top games after our featured game!!!!\n"
+        a = Game.top_five_games_of_all
+        x = -2
+        5.times do
+            puts "Game: "+"   #{a[x][1]}".blue
+            puts "Rating: "+" #{a[x][0]}".blue
+            puts "\n"
+            x -= 1
+        end
+        choices = {Top_3_Genres: 1, Recent_Reviews: 2, Go_To_Profile: 3, Go_Back_To_Main_Page: 4}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            system('clear')
+            top_three_rated_genres_page
+        elsif val == 2
+            system('clear')
+            ten_most_recent_reviews
+        elsif val == 3
+            system('clear')
+            profile_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
+    def games_under_genre
+        @current_game = nil
+        Game.games_in_genre(@current_genre).each do |game|
+            p game.name
+        end
+        choices = {Find_Game: 1, Find_By_Genre: 2, Main_Page: 3}
+        prompt = TTY::Prompt.new
+        val = prompt.select("What would you like to do right now?", choices)
+        if val == 1
+            puts "\n What game would you like to search?"
+            @current_game = gets.chomp
+            system('clear')
+            find_game_by_name_page
+        elsif val == 2
+            system('clear')
+            find_by_genre_page
+        else
+            system('clear')
+            main_page
+        end
+    end
+
 
 
 end
 
-# binding.pry
 puts "HELLO WORLD"
 
 AppCLI.new.run

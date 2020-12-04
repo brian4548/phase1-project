@@ -9,4 +9,5 @@ gem "pry"
 gem "require_all"
 gem "rake"
 gem "bundler"
+gem "colorize"
 # gem 'tty-prompt', '~> 0.22.0'

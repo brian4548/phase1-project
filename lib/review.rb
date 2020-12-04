@@ -46,37 +46,38 @@ class Review < ActiveRecord::Base
         
     end
 
-    def self.all_reviews
-        hash = Hash.new{|hash,key| hash[key] = []}
-        self.game_comment_rating_array.each {|value|
-        if hash.key?(value[0]) == false
-            hash[value[0]] = {:rating => [], :comment => []} 
-            hash[value[0]][:rating] << value[1]
-            hash[value[0]][:comment] << value[2]
-        else
-            hash[value[0]][:comment] << value[2]
-            hash[value[0]][:rating] << value[1]
-        end
-        }
+
+    def self.ratings_hash
+        hash = Hash.new {|hash,key| hash[key] = []}
+        self.ratings_array.each {|q| hash[q[0]] << q[1]}
         hash
-    end 
+    end
 
-
-    # def self.ratings_hash
-    #     hash = Hash.new {|hash,key| hash[key] = []}
-    #     self.ratings_array.each {|q| hash[q[0]] << q[1]}
-    #     hash
-    # end
-
-    # def self.comments_hash
-    #     hash = Hash.new {|hash, key| hash[key] = []}
-    #     self.comments_array.each {|q| hash[q[0]] << q[1]}
-    #     hash
-    # end
+    def self.comments_hash
+        hash = Hash.new {|hash, key| hash[key] = []}
+        self.comments_array.each {|q| hash[q[0]] << q[1]}
+        hash
+    end
     
-    # def self.game_rating_comment_hash
-
-    # end
+    def self.game_rating_comment_hash
+        hash = Hash.new{|hash,key| hash[key] = []}
+        self.game_comment_rating_array.each do |q|
+            if hash.key?(q[0]) == false
+                hash[q[0]] = {:ratings => [], :comments => []}
+                hash[q[0]][:ratings] << q[1]
+                hash[q[0]][:comments] <<q[2] 
+            else
+                hash[q[0]][:ratings] << q[1]
+                hash[q[0]][:comments] << q[2]
+            end
+        end
+        count = 0
+        hash.each_key do |key|
+            count = hash[key][:ratings].count
+            hash[key][:ratings] = (hash[key][:ratings].sum / count)
+        end
+        hash
+    end
 
    
     
